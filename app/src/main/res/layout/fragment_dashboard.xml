@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:id="@+id/containerfrag"
-    tools:context="weather.ms.com.com.fr_DashboardWeather">
+   >
 
 
     <TextView
@@ -15,8 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="40sp"
+
         android:layout_centerHorizontal="true"
+        android:textSize="30sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -38,7 +39,7 @@
         android:layout_marginTop="20sp"
         android:layout_below="@+id/updated_field"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="60sp" />
+        android:textSize="51sp" />
 
     <TextView
         android:id="@+id/weather_icon"
@@ -59,4 +60,14 @@
         android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         />
+
+    <TextView
+       android:text="@string/info_internet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+
 </RelativeLayout>

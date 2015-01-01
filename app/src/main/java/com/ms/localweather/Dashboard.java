@@ -113,9 +113,8 @@ public class Dashboard extends Fragment {
 
     private void renderWeather(JSONObject json){
         try {
-            cityField.setText(json.getString("name").toUpperCase(Locale.US) +
-                    ", " +
-                    json.getJSONObject("sys").getString("country"));
+            cityField.setText(json.getString("name").toUpperCase(Locale.US) + ", " + json.getJSONObject("sys").getString("country"));
+
 
             JSONObject details = json.getJSONArray("weather").getJSONObject(0);
             JSONObject main = json.getJSONObject("main");
@@ -124,9 +123,7 @@ public class Dashboard extends Fragment {
                             "\n" + "Humidity: " + main.getString("humidity") + "%" +
                             "\n" + "Pressure: " + main.getString("pressure") + " hPa");
 
-            currentTemperatureField.setText(
-                    String.format("%.2f", main.getDouble("temp"))+ " ℃");
-
+            currentTemperatureField.setText( String.format("%.2f", main.getDouble("temp"))+ " ℃");
             temprature=main.getDouble("temp");
 
             if(temprature>40)
@@ -143,19 +140,16 @@ public class Dashboard extends Fragment {
                 parent.frameContainer.setBackgroundResource(R.drawable.gradient_15);
             else if(temprature>10)
                 parent.frameContainer.setBackgroundResource(R.drawable.gradient_10);
-            else
+            else if(temprature>5)
                 parent.frameContainer.setBackgroundResource(R.drawable.gradient_05);
-
+            else
+                parent.frameContainer.setBackgroundResource(R.drawable.gradient_00);
 
             DateFormat df = DateFormat.getDateTimeInstance();
             String updatedOn = df.format(new Date(json.getLong("dt")*1000));
             updatedField.setText("Last update: " + updatedOn);
 
-            setWeatherIcon(details.getInt("id"),
-                  json.getJSONObject("sys").getLong("sunrise") * 1000,
-                json.getJSONObject("sys").getLong("sunset") * 1000);
-
-
+           setWeatherIcon(details.getInt("id"), json.getJSONObject("sys").getLong("sunrise") * 1000, json.getJSONObject("sys").getLong("sunset") * 1000);
 
         }catch(Exception e){
             Log.e("SimpleWeather", "One or more fields not found in the JSON data");
