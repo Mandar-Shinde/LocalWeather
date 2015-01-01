@@ -1,15 +1,18 @@
 package com.ms.localweather;
 
 
-import android.support.v7.app.ActionBarActivity;
+
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 
 
-public class WeatherMainActivity extends ActionBarActivity {
+public class WeatherMainActivity extends FragmentActivity
+{
 
     Dashboard dashboard;
     FrameLayout frameContainer;
