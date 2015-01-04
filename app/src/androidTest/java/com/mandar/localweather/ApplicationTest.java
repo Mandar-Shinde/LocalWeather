@@ -1,4 +1,4 @@
-package com.ms.localweather;
+package com.mandar.localweather;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

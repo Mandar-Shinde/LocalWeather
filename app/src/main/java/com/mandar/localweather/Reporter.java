@@ -1,4 +1,4 @@
-package com.ms.localweather;
+package com.mandar.localweather;
 
 /**
  * Created by mandar on 01-Jan-15.
