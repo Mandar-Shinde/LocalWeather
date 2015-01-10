@@ -21,17 +21,20 @@ import android.util.Log;
 public class Reporter implements LocationListener {
     private static final String OPEN_WEATHER_MAP_API =
             "http://api.openweathermap.org/data/2.5/weather?";//"http://api.openweathermap.org/data/2.5/weather?q=%s&units=metric";
-    static boolean isGPSEnabled = false;
-    static boolean isNetworkEnabled = false;
+    public  static boolean isGPSEnabled = false;
+    public  static boolean isNetworkEnabled = false;
     static Location location = null;
     static float latitude;
     static float longitude;
+   static  StringBuilder useurl;
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
     protected LocationManager locationManager;
     private Location m_Location;
+
+
 
     public static JSONObject getJSON(Context context, String city){
         try {
@@ -48,11 +51,12 @@ public class Reporter implements LocationListener {
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
 
-            StringBuilder useurl = new StringBuilder();
+
+            useurl = new StringBuilder();
 
             if (!isGPSEnabled && !isNetworkEnabled)
             {
-                useurl.append(OPEN_WEATHER_MAP_API).append("q=").append(city).append("&units=metric");
+                useurl.append(OPEN_WEATHER_MAP_API).append("q=").append("pune").append("&units=metric");
             }
             else
             {
@@ -84,7 +88,6 @@ public class Reporter implements LocationListener {
                 }
                 useurl.append(OPEN_WEATHER_MAP_API).append("lat=").append(String.valueOf(latitude)).append("&lon=").append(String.valueOf(longitude)).append("&units=metric");
             }
-
 
 
             URL url = new URL(useurl.toString());

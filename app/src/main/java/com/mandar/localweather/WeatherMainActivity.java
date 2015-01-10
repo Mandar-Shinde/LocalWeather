@@ -2,12 +2,17 @@ package com.mandar.localweather;
 
 
 
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.VideoView;
 
+import java.io.IOException;
 
 
 public class WeatherMainActivity extends FragmentActivity
@@ -16,13 +21,14 @@ public class WeatherMainActivity extends FragmentActivity
     Dashboard dashboard;
     FrameLayout frameContainer;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_main);
 
         frameContainer = (FrameLayout)findViewById(R.id.container);
+
+
         dashboard= new Dashboard();
 
         if (savedInstanceState == null)
@@ -33,6 +39,22 @@ public class WeatherMainActivity extends FragmentActivity
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        getSupportFragmentManager().beginTransaction()
+                .remove(dashboard)
+                .commit();
+
+
+        dashboard= new Dashboard();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container,dashboard)
+                    .commit();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

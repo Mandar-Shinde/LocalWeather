@@ -62,12 +62,14 @@
         />
 
     <TextView
+        android:id="@+id/news"
        android:text="@string/info_internet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
 
 </RelativeLayout>

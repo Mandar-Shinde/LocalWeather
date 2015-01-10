@@ -23,4 +23,5 @@
 
     <string name="place_not_found">Sorry, no weather data found.</string>
     <string name="info_internet">Requires Internet Access for Tiny Weather Update</string>
+    <string name="info_status">Loading...</string>
 </resources>

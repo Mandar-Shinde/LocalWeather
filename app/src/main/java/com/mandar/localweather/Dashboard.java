@@ -1,6 +1,8 @@
 package com.mandar.localweather;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -65,19 +67,26 @@ public class Dashboard extends Fragment {
     TextView detailsField;
     TextView currentTemperatureField;
     TextView weatherIcon;
+    TextView news;
 
     Typeface weatherFont;
     Handler handler;
 
+    Context con;
     double temprature;
 
     public Dashboard()  {
         handler = new Handler();
     }
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+
+
+
         weatherFont = Typeface.createFromAsset(getActivity().getAssets(), "font/font.ttf");
         updateWeatherData("");
 
@@ -113,6 +122,8 @@ public class Dashboard extends Fragment {
 
     private void renderWeather(JSONObject json){
         try {
+
+
             cityField.setText(json.getString("name").toUpperCase(Locale.US) + ", " + json.getJSONObject("sys").getString("country"));
 
 
@@ -195,6 +206,7 @@ public class Dashboard extends Fragment {
         detailsField = (TextView)rootView.findViewById(R.id.details_field);
         currentTemperatureField = (TextView)rootView.findViewById(R.id.current_temperature_field);
         weatherIcon = (TextView)rootView.findViewById(R.id.weather_icon);
+        news = (TextView)rootView.findViewById(R.id.news);
 
         weatherIcon.setTypeface(weatherFont);
         return rootView;
