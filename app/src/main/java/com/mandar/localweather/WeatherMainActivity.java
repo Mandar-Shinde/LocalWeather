@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.VideoView;
@@ -24,6 +26,7 @@ public class WeatherMainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_weather_main);
 
         frameContainer = (FrameLayout)findViewById(R.id.container);
@@ -37,23 +40,6 @@ public class WeatherMainActivity extends FragmentActivity
                     .add(R.id.container,dashboard)
                     .commit();
         }
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        getSupportFragmentManager().beginTransaction()
-                .remove(dashboard)
-                .commit();
-
-
-        dashboard= new Dashboard();
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container,dashboard)
-                    .commit();
-
     }
 
     @Override

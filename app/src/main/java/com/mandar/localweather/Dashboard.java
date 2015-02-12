@@ -104,6 +104,7 @@ public class Dashboard extends Fragment {
                             Toast.makeText(getActivity(),
                                     getActivity().getString(R.string.place_not_found),
                                     Toast.LENGTH_LONG).show();
+                            news.setText(R.string.info_internet);
 
                         }
                     });
