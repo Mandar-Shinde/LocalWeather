@@ -2,7 +2,7 @@
 
     <!-- Base application theme.   <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar.TranslucentDecor">-->
     <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar">
-        <item name="android:textColor">#303030</item>
+        <item name="android:textColor">#fafafa</item>
     </style>
 
 </resources>

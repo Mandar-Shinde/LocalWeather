@@ -66,11 +66,14 @@ public class Dashboard extends Fragment {
     TextView updatedField;
     TextView detailsField;
     TextView currentTemperatureField;
+
     TextView weatherIcon;
     TextView news;
 
     Typeface weatherFont;
     Handler handler;
+
+    JSONObject json;
 
     Context con;
     double temprature;
@@ -88,7 +91,9 @@ public class Dashboard extends Fragment {
 
 
         weatherFont = Typeface.createFromAsset(getActivity().getAssets(), "font/font.ttf");
+
         updateWeatherData("");
+
 
     }
 
@@ -97,14 +102,21 @@ public class Dashboard extends Fragment {
 
         new Thread(){
             public void run(){
-                final JSONObject json = Reporter.getJSON(getActivity(), city);
+                json =null;
+                 json = Reporter.getJSON(getActivity(), city);
+                for(int i=0;i<5 && json == null ;i++)
+                {
+                    json = Reporter.getJSON(getActivity(), city);
+                    try {
+                        Thread.sleep(1000);} catch(Exception e){}
+                }
+
                 if(json == null){
                     handler.post(new Runnable(){
                         public void run(){
-                            Toast.makeText(getActivity(),
-                                    getActivity().getString(R.string.place_not_found),
-                                    Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getActivity(), getActivity().getString(R.string.place_not_found), Toast.LENGTH_LONG).show();
                             news.setText(R.string.info_internet);
+
 
                         }
                     });
@@ -114,6 +126,7 @@ public class Dashboard extends Fragment {
                             renderWeather(json);
                         }
                     });
+
                 }
             }
         }.start();
@@ -135,27 +148,31 @@ public class Dashboard extends Fragment {
                             "\n" + "Humidity: " + main.getString("humidity") + "%" +
                             "\n" + "Pressure: " + main.getString("pressure") + " hPa");
 
-            currentTemperatureField.setText( String.format("%.2f", main.getDouble("temp"))+ " ℃");
-            temprature=main.getDouble("temp");
+            temprature = main.getDouble("temp");
+            temprature =  ((9*temprature)/5) + 32;//((temprature - 32)*5)/9;;//f->c
+            currentTemperatureField.setText( String.format("%.2f", main.getDouble("temp"))+ " ℃  |  "  + String.format("%.2f", temprature)+ " °F" );
 
-            if(temprature>40)
-                parent.frameContainer.setBackgroundResource(R.drawable.gradient_40);
-            else if(temprature>35)
-                parent.frameContainer.setBackgroundResource(R.drawable.gradient_35);
-            else if(temprature>30)
-                parent.frameContainer.setBackgroundResource(R.drawable.gradient_30);
-            else if(temprature>25)
-                parent.frameContainer.setBackgroundResource(R.drawable.gradient_25);
-            else if(temprature>20)
-                parent.frameContainer.setBackgroundResource(R.drawable.gradient_20);
-            else if(temprature>15)
-                parent.frameContainer.setBackgroundResource(R.drawable.gradient_15);
-            else if(temprature>10)
-                parent.frameContainer.setBackgroundResource(R.drawable.gradient_10);
-            else if(temprature>5)
-                parent.frameContainer.setBackgroundResource(R.drawable.gradient_05);
-            else
-                parent.frameContainer.setBackgroundResource(R.drawable.gradient_00);
+
+
+//
+//            if(temprature>40)
+//                parent.frameContainer.setBackgroundResource(R.drawable.gradient_40);
+//            else if(temprature>35)
+//                parent.frameContainer.setBackgroundResource(R.drawable.gradient_35);
+//            else if(temprature>30)
+//                parent.frameContainer.setBackgroundResource(R.drawable.gradient_30);
+//            else if(temprature>25)
+//                parent.frameContainer.setBackgroundResource(R.drawable.gradient_25);
+//            else if(temprature>20)
+//                parent.frameContainer.setBackgroundResource(R.drawable.gradient_20);
+//            else if(temprature>15)
+//                parent.frameContainer.setBackgroundResource(R.drawable.gradient_15);
+//            else if(temprature>10)
+//                parent.frameContainer.setBackgroundResource(R.drawable.gradient_10);
+//            else if(temprature>5)
+//                parent.frameContainer.setBackgroundResource(R.drawable.gradient_05);
+//            else
+//                parent.frameContainer.setBackgroundResource(R.drawable.gradient_00);
 
             DateFormat df = DateFormat.getDateTimeInstance();
             String updatedOn = df.format(new Date(json.getLong("dt")*1000));
@@ -170,27 +187,47 @@ public class Dashboard extends Fragment {
 
     private void setWeatherIcon(int actualId, long sunrise, long sunset){
         int id = actualId / 100;
+        boolean isnight=false;
+
         String icon = "";
         if(actualId == 800){
             long currentTime = new Date().getTime();
             if(currentTime>=sunrise && currentTime<sunset) {
                 icon = getActivity().getString(R.string.weather_sunny);
+                parent.setBGvid("ship");
             } else {
                 icon = getActivity().getString(R.string.weather_clear_night);
+                isnight=true;
+                parent.setBGvid("night");
             }
+
+
+
         } else {
             switch(id) {
                 case 2 : icon = getActivity().getString(R.string.weather_thunder);
+                    if(isnight != true)
+                        parent.setBGvid("rain");
                     break;
                 case 3 : icon = getActivity().getString(R.string.weather_drizzle);
+                    if(isnight != true)
+                        parent.setBGvid("hay");
                     break;
                 case 7 : icon = getActivity().getString(R.string.weather_foggy);
+                    if(isnight != true)
+                        parent.setBGvid("hay");
                     break;
                 case 8 : icon = getActivity().getString(R.string.weather_cloudy);
+                    if(isnight != true)
+                        parent.setBGvid("night");
                     break;
                 case 6 : icon = getActivity().getString(R.string.weather_snowy);
+                    if(isnight != true)
+                        parent.setBGvid("rain");
                     break;
                 case 5 : icon = getActivity().getString(R.string.weather_rainy);
+                    if(isnight != true)
+                        parent.setBGvid("rain");
                     break;
             }
         }
@@ -206,6 +243,7 @@ public class Dashboard extends Fragment {
         updatedField = (TextView)rootView.findViewById(R.id.updated_field);
         detailsField = (TextView)rootView.findViewById(R.id.details_field);
         currentTemperatureField = (TextView)rootView.findViewById(R.id.current_temperature_field);
+
         weatherIcon = (TextView)rootView.findViewById(R.id.weather_icon);
         news = (TextView)rootView.findViewById(R.id.news);
 
