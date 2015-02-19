@@ -35,40 +35,16 @@ public class WeatherMainActivity extends FragmentActivity {
         frameContainer = (RelativeLayout) findViewById(R.id.container);
         videoView = (VideoView) findViewById(R.id.videoView);
 
-//        String uriPath = "android.resource://mov/raw/Best3gp";
-//        Uri uri = Uri.parse(uriPath);
-//        videoView.setVideoPath(uriPath);
-
-       // setBGvid("upsea");
-//
-//
-//        dashboard = new Dashboard();
-//
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.container, dashboard)
-//                    .commit();
-//        }
-
-
-        dashboard = new Dashboard();
-        FragmentManager fm = getSupportFragmentManager();
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
-        }
-        getSupportFragmentManager().beginTransaction().add(R.id.container, dashboard).commit();
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+        // Set Background unitill dashboard is loaded
         setBGvid("upsea");
 
+        // Load Dashboard
+        dashboard = new Dashboard();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, dashboard).commit();
+
     }
 
-
+    // Dashboard Background Setter
     public void setBGvid(String s)
     {
         String uriPath = "android.resource://" + getPackageName() + "/raw/"+s;
@@ -87,25 +63,4 @@ public class WeatherMainActivity extends FragmentActivity {
         videoView.start();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
- //       getMenuInflater().inflate(R.menu.menu_weather_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
